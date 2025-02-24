@@ -1,0 +1,268 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Dashboard 2</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.css' %}">
+</head>
+<body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+<div class="wrapper">
+
+  
+
+  <!-- Navbar -->
+  {% include 'includes/nav.html' %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  {% include 'includes/aside.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+
+
+
+    {% if object.varient.id == request.user.id %}
+    <ul class="navbar-nav ml-4 float-right">
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="fa fa-ribbon"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  History
+                  <span class="float-right text-lg"><i class="fas fa-clock"></i></span>
+                </h3>
+                <p class="text-sm">View all group activities...</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="{% url 'varient_settings' object.id %}" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Varient Settings
+                  <span class="float-right text-lg text-muted"><i class="fas fa-edit"></i></span>
+                </h3>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+
+          <!-- DELETE CLAN -->
+          
+          <a href="{% url 'varient-delete' object.pk %}" class="dropdown-item">
+            <div class="media">
+                <div class="media-body">
+                  <h3 class="dropdown-item-title">
+                     Delete Clan
+                    <span class="float-right text-lg text-danger"><i class="fas fa-trash"></i></span>
+                  </h3>
+              </div>
+            </div>
+            
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+        </div>
+      </li>
+    </ul>
+    {% endif %}
+
+
+
+    <h3 class="ml-3">{{ object.varient }}</h3>
+    <!-- Content Header (Page header) -->
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- ./card-body -->
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-sm-6 col-6">
+                  <div class="description-block border-right">
+                    <h5 class="description-header">K {{ object.saving }}</h5>
+                    <span class="description-text">Saving</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6 col-6">
+                  <div class="description-block border-right">
+                    <h5 class="description-header">K {{ object.revenue_share }}</h5>
+                    <span class="description-text">Revenue Share</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                
+                <!-- /.col -->
+                
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.card-footer -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        
+
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <div class="col-md-12">
+            <!-- MAP & BOX PANE -->
+          
+            
+            <!-- TABLE: LATEST ORDERS -->
+            <div class="card">
+              
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>Added By</th>
+                      <th>Amount</th>
+                      <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for obj in savings %}
+                    <tr>
+                      <td>
+                        <a href="">
+                          {{ obj.paid_by }}
+                        </a>
+                      </td>
+
+                      <td>{{ obj.amount }}</td>
+
+                     
+                      <td><span class="badge ">{{ obj.saved_on }}</span></td>
+                      
+                      
+                    </tr>
+                    {% endfor %}
+                   
+                    
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+             
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+
+     
+        <!-- /.row -->
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Varient Savings</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <form action="" method="post">
+          {% csrf_token%}
+        <div class="modal-body">
+          
+        <input name="amount" type="number" class="form-control" placeholder="Saving Amount">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+   
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer>
+  </div>
+</div>
+
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+<!-- Bootstrap -->
+
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="plugins/raphael/raphael.min.js"></script>
+<script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="dist/js/pages/dashboard2.js"></script>
+
+
+</body>
+</html>

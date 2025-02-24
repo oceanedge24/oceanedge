@@ -1,0 +1,23 @@
+.profile-icon {
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.profile-icon:hover {
+    transform: scale(1.1);
+    border-color: #007bff;  /* Blue border on hover */
+}
+
+.profile-icon-label {
+    display: inline-block;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+}
+
+.selected .profile-icon {
+    border-color: #007bff; /* Highlight selected icon */
+    transform: scale(1.1);
+}

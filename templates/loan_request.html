@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Advanced form elements</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.css' %}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="../../plugins/icheck-bootstrap/icheck-bootstrap.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="../../plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="../../plugins/select2/css/select2.css">
+  <link rel="stylesheet" href="../../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.css' %}">
+  <!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.js' %}"></script>
+  <script>
+		$(document).ready(function() {
+			$('#id_amount, #id_period').on('input', function() {
+				var amount = parseFloat($('#id_amount').val()) || 0;
+				var rate = parseFloat($('#id_period').val()) || 0;
+				var interest = (amount * rate) / 100;
+				var total = amount + interest;
+				$('#interest').text(interest.toFixed(2));
+				$('#total').text(total.toFixed(2));
+				$('#rate-value').text(rate + '%');
+				if (rate === 40) {
+					var retain = total * 0.125;
+					$('#retain').text(retain.toFixed(2)).show();
+				} else {
+					$('#retain').hide();
+				}
+			});
+		});
+	</script>
+</head>
+<body class="hold-transition dark-mode sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  {% include 'includes/nav.html' %}
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  {% include 'includes/aside.html' %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Credit Form</h1>
+          </div>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+   
+    <section class="content">
+      <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+          
+     
+          <!-- /.card-body -->
+         
+        </div>
+        <!-- /.card -->
+
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+          
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form action="" method="post">
+              {% csrf_token %}
+            <div class="row">
+
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">K</span>
+                  </div>
+                  <input type="number" name="amount" placeholder="Amount" id="id_amount" class="form-control" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text">.00</span>
+                  </div>
+                </div>
+                <!-- /.form-group -->
+                
+                <div class="form-group">
+                  <label for="{{ form.period.id_for_label }}">Select Period:</label>
+                  
+                  <label>Period</label>
+                  <select name="period" id="id_period" required class="custom-select">
+                    <option value="">Select a credit period</option>
+                    <option value="12">1 Week</option>
+                    <option value="20">2 Weeks</option>
+                    <option value="25">25% 1 Month</option>
+                    <option value="30" >4 Weeks</option>
+                    <option value="40">8 Weeks</option>
+                    <option value="50">16 Weeks</option>
+                  </select>
+                 
+                </div>
+                
+
+
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">WITNESS</label>
+                    <input type="text" name="witness" class="form-control" id="search-input"
+                    placeholder="Search Witness">
+                    <p id="search-result"></p>
+                  </div>
+                
+                </div>
+
+
+
+              </div>
+              <!-- /.col -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="card-footer p-0">
+                    <ul class="nav nav-pills flex-column">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          Interest:
+                          K<span class="float-right text-success" id="interest">
+                            0.00</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          Rate In  Percentage
+                          <span class="float-right text-success">
+                            <i class="fas fa-arrow-up text-sm"></i>
+                            <span id="rate-value"></span>
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          Weekly Payment
+                          <span class="float-right text-success">
+                            <span id="retain" style="display:none;">0.00</span>
+                          
+                          </span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">
+                          Total Amount: K
+                          <span class="float-right text-warning" id="total">
+                            0.00
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+              </div>
+              <!-- /.col -->
+
+              <!-- /.footer -->
+      <div class="card-footer">
+        <button type="submit" class="btn btn-info">Submit Application</button>
+        <a  href="/" class="btn btn-default"><span class="float-right">Cancel</span></a>
+      </div>
+            </div>
+            <!-- /.row -->
+          </form>
+          </div>
+          <!-- /.card-body -->
+          
+        </div>
+
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
+    </div>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+
+<!-- Page specific script -->
+<script>
+  $(document).ready(function() {
+      $('#search-input').on('keyup', function() {
+          var query = $(this).val().trim();
+
+          if (query.length > 0) {
+              $.ajax({
+                  url: '/search_user/',
+                  data: {'q': query},
+                  dataType: 'json',
+                  success: function(data) {
+                      if (data.username) {
+                          $('#search-result').text('Witness: ' + data.username + ' ' + data.id_number);
+                      } else {
+                          $('#search-result').text('No user found.');
+                          $('#search-result').addClass('text-danger');
+                      }
+                  }
+              });
+          } else {
+              $('#search-result').text('');
+          }
+      });
+  });
+</script>
+
+</body>
+</html>
