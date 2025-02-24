@@ -30,9 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'crispy_bootstrap4',
     'crispy_forms',
-    'widget_tweaks',
-
-
+    
     'account',
     'core',
     'clan',
