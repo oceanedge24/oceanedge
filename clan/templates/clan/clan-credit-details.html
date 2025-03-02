@@ -73,7 +73,7 @@
                     <strong>{{ obj.approved_by }}</strong><br>
                     795 Folsom Ave, Suite 600<br>
                     San Francisco, CA 94107<br>
-                    Phone: {{ obj.approved_by.mobile_number }}<br>
+                    Phone: {{ obj.approved_by.varient.mobile_number }}<br>
                   </address>
                 </div>
                 {% endif %}
@@ -84,7 +84,7 @@
                     <strong>{{ obj.credited_by }}</strong><br>
                     795 Folsom Ave, Suite 600<br>
                     San Francisco, CA 94107<br>
-                    Phone: {{ obj.credited_by.mobile_number }}<br>
+                    Phone: {{ obj.credited_by.varient.mobile_number }}<br>
                   </address>
                 </div>
                 <!-- /.col -->

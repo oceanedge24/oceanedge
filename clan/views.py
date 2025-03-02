@@ -357,36 +357,38 @@ def apply_for_credit(request, slug):
 def approve_credit(request, pk):
     user = request.user
     obj = get_object_or_404(ClanCredit,pk=pk)
-    obj.approved_by
-    if obj.clan.chief == request.user or request.user in obj.clan.trasurer.all():
-        if obj.amount <= obj.clan.main_balance:
-            if obj.approved == False:
-                obj.approved = True
-                obj.status = 'payment'
-                approved_by = user
-                obj.approved_by = approved_by
-                obj.save()
+    if not obj.approved_by:
+        if obj.clan.chief == request.user or request.user in obj.clan.trasurer.all():
+            if obj.amount <= obj.clan.main_balance:
+                if obj.approved == False:
+                    obj.approved = True
+                    obj.status = 'payment'
+                    approved_by = user
+                    obj.approved_by = approved_by
+                    obj.save()
 
 
-                ####ADD CLAN ACTIVITY
-                ClanActivity.objects.create(
-                    clan = obj.clan,
-                    user = user,
-                    action = 'CREDIT_APPROVED',
-                    details = f"Credit of {obj.amount} by {obj.credited_by } was approved"
-                )
+                    ####ADD CLAN ACTIVITY
+                    ClanActivity.objects.create(
+                        clan = obj.clan,
+                        user = user,
+                        action = 'CREDIT_APPROVED',
+                        details = f"Credit of {obj.amount} by {obj.credited_by } was approved"
+                    )
 
-                #### INCREASE CLAN's MONEY IN CREDITS
-                get_clan = obj.clan
-                get_clan.money_in_credits += obj.amount
-                get_clan.main_balance -= obj.amount
-                get_clan.save()
+                    #### INCREASE CLAN's MONEY IN CREDITS
+                    get_clan = obj.clan
+                    get_clan.money_in_credits += obj.amount
+                    get_clan.main_balance -= obj.amount
+                    get_clan.save()
 
-                return redirect(obj.get_absolute_url())
+                    return redirect(obj.get_absolute_url())
+            else:
+                messages.add_message(request, messages.INFO, 'You dont have enough money in your savings')
         else:
-            messages.add_message(request, messages.INFO, 'You dont have enough money in your savings')
+                messages.add_message(request, messages.INFO, 'Contact Clan Chief or Trasurer for approval')
     else:
-            messages.add_message(request, messages.INFO, 'Contact Clan Chief or Trasurer for approval')
+        messages.add_message(request, messages.INFO, 'THIS LOAN IS ALREADY APPROVED')
     return redirect(obj.get_absolute_url())
 
 

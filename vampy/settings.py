@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-9@h8i_%u++!(7c)_awh0y9gq_qj15jf)4w&%!e$z9)w_og7fh7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.157.204','192.168.1.122']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.157.204','192.168.1.122','oceanedge.pythonanywhere.com']
 
 
 # Application definition
@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'crispy_bootstrap4',
     'crispy_forms',
-    
+
     'account',
     'core',
     'clan',
@@ -125,8 +125,14 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR, 'static']
+
+if DEBUG:
+    STATIC_URL = 'static/'
+    STATICFILES_DIRS = [BASE_DIR, 'static']
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = '/home/oceanedge/oceanedge/static_root'
+    STATICFILES_DIRS = os.path.join(BASE_DIR, 'static_root')
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

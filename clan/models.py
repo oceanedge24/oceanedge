@@ -152,7 +152,7 @@ class ClanCredit(models.Model):
     ]
     clan        =   models.ForeignKey('Clan', on_delete=models.CASCADE)
     credited_by =   models.ForeignKey(Varient, on_delete=models.PROTECT, blank=True, related_name='credited_by')
-    approved_by =   models.ForeignKey(User, models.CASCADE, blank=True, null=True)
+    approved_by =   models.ForeignKey(Varient, models.CASCADE, blank=True, null=True)
     amount      =   models.DecimalField(decimal_places=2, default=0.00, max_digits=7)
     amount_paid =   models.DecimalField(decimal_places=2, max_digits=7, default=0.00)
     total_amount=   models.DecimalField(decimal_places=2, max_digits=7, default=0.00)

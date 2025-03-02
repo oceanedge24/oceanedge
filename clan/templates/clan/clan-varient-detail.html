@@ -33,65 +33,19 @@
   <div class="content-wrapper">
 
 
-
-    {% if object.varient.id == request.user.id %}
-    <ul class="navbar-nav ml-4 float-right">
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="fa fa-ribbon"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  History
-                  <span class="float-right text-lg"><i class="fas fa-clock"></i></span>
-                </h3>
-                <p class="text-sm">View all group activities...</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="{% url 'varient_settings' object.id %}" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Varient Settings
-                  <span class="float-right text-lg text-muted"><i class="fas fa-edit"></i></span>
-                </h3>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-
-          <!-- DELETE CLAN -->
-          
-          <a href="{% url 'varient-delete' object.pk %}" class="dropdown-item">
-            <div class="media">
-                <div class="media-body">
-                  <h3 class="dropdown-item-title">
-                     Delete Clan
-                    <span class="float-right text-lg text-danger"><i class="fas fa-trash"></i></span>
-                  </h3>
-              </div>
-            </div>
-            
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-        </div>
-      </li>
-    </ul>
-    {% endif %}
-
-
-
     <h3 class="ml-3">{{ object.varient }}</h3>
+
+    {% if request.user.id == object.varient.id %}
+    <div class="ml-4">
+        <a class="nav-link" data-toggle="dropdown" href="{% url 'varient_settings' object.id %}">
+          <i class="fa fa-cog">Settings</i>
+        </a>
+      </div>
+      {% endif %}
+
+
+
+    
     <!-- Content Header (Page header) -->
 
 

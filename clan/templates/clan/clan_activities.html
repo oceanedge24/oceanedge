@@ -21,8 +21,9 @@
 
  <!-- Main Sidebar Container -->
  {% include 'includes/aside.html' %}
-
- <h1>Activities for Clan: {{ clan.name }}</h1>
+<br><br>
+<h3 class="mt-3">Activities for Clan: {{ clan.name }}</h3>
+ 
 
  <ul>
      {% for activity in page_obj %}
@@ -57,9 +58,9 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
+</div> <br><br><br><br>
 
-
+{% include 'includes/footer.html' %}
     </div>
 
 
